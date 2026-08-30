@@ -1,0 +1,220 @@
+@import "tailwindcss";
+
+@plugin "tailwindcss-animate";
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  
+  --color-surface: var(--surface);
+  --color-surface-secondary: var(--surface-secondary);
+  
+  --color-border: var(--border);
+  
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  
+  --color-accent: var(--accent);
+  --color-accent-secondary: var(--accent-secondary);
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+    /* Light mode - warm/cool off-white */
+    --background: #f8f9fa;
+    --foreground: #16181d;
+    
+    --surface: #ffffff;
+    --surface-secondary: #f2f3f5;
+    
+    --border: rgba(0,0,0,0.08);
+    
+    --muted: #f2f3f5;
+    --muted-foreground: #60646c;
+    
+    --accent: #2563eb; /* Professional blue */
+    --accent-secondary: #1e40af;
+
+    /* ActionLink Primary */
+    --action-primary-fg: var(--foreground);
+    --action-primary-bg: transparent;
+    --action-primary-border: var(--border);
+    --action-primary-hover-bg: var(--foreground);
+    --action-primary-hover-fg: var(--background);
+
+    /* ActionLink Secondary */
+    --action-secondary-fg: var(--muted-foreground);
+    --action-secondary-bg: transparent;
+    --action-secondary-border: rgba(0,0,0,0.1);
+    --action-secondary-hover-bg: var(--surface-secondary);
+    --action-secondary-hover-fg: var(--foreground);
+
+    /* ActionLink Quiet */
+    --action-quiet-fg: var(--muted-foreground);
+    --action-quiet-bg: transparent;
+    --action-quiet-border: transparent;
+    --action-quiet-hover-bg: var(--surface-secondary);
+    --action-quiet-hover-fg: var(--foreground);
+  }
+
+  /* Dark mode */
+  .dark {
+    color-scheme: dark;
+    --background: #090a0c; /* graphite-black */
+    --foreground: #f4f4f5;
+    
+    --surface: #0e1014;
+    --surface-secondary: #13161c; 
+    
+    --border: rgba(255,255,255,0.08);
+    
+    --muted: #13161c;
+    --muted-foreground: #9ca3af;
+    
+    --accent: #3b82f6; /* Professional blue */
+    --accent-secondary: #60a5fa;
+
+    /* ActionLink Primary */
+    --action-primary-fg: var(--foreground);
+    --action-primary-bg: transparent;
+    --action-primary-border: var(--border);
+    --action-primary-hover-bg: var(--foreground);
+    --action-primary-hover-fg: var(--background);
+
+    /* ActionLink Secondary */
+    --action-secondary-fg: var(--muted-foreground);
+    --action-secondary-bg: transparent;
+    --action-secondary-border: rgba(255,255,255,0.15);
+    --action-secondary-hover-bg: #1c1f26; /* Slightly lighter graphite */
+    --action-secondary-hover-fg: #ffffff;
+
+    /* ActionLink Quiet */
+    --action-quiet-fg: var(--muted-foreground);
+    --action-quiet-bg: transparent;
+    --action-quiet-border: transparent;
+    --action-quiet-hover-bg: var(--surface-secondary);
+    --action-quiet-hover-fg: var(--foreground);
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground antialiased font-sans;
+    /* Basic CSS theme transition fallback. Not applied to opacity/transform. */
+    transition-property: background-color, color, border-color, text-decoration-color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 250ms;
+  }
+
+  ::selection {
+    background-color: rgba(37, 99, 235, 0.2);
+    color: var(--accent);
+  }
+
+  .dark ::selection {
+    background-color: rgba(59, 130, 246, 0.25);
+    color: var(--accent);
+  }
+
+  *:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply tracking-tight font-medium;
+  }
+
+  /* View Transitions overrides to prevent default crossfade */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+  }
+  
+  ::view-transition-old(root) {
+    z-index: 1;
+  }
+  ::view-transition-new(root) {
+    z-index: 2;
+  }
+  
+  .dark::view-transition-old(root) {
+    z-index: 1;
+  }
+  .dark::view-transition-new(root) {
+    z-index: 2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@layer components {
+  .action-link {
+    color: var(--action-fg);
+    background-color: var(--action-bg);
+    border-color: var(--action-border);
+  }
+
+  /* Different variants map their specific variables to the generic ones */
+  .action-link-primary {
+    --action-fg: var(--action-primary-fg);
+    --action-bg: var(--action-primary-bg);
+    --action-border: var(--action-primary-border);
+    --action-hover-bg: var(--action-primary-hover-bg);
+    --action-hover-fg: var(--action-primary-hover-fg);
+  }
+
+  .action-link-secondary {
+    --action-fg: var(--action-secondary-fg);
+    --action-bg: var(--action-secondary-bg);
+    --action-border: var(--action-secondary-border);
+    --action-hover-bg: var(--action-secondary-hover-bg);
+    --action-hover-fg: var(--action-secondary-hover-fg);
+  }
+
+  .action-link-quiet {
+    --action-fg: var(--action-quiet-fg);
+    --action-bg: var(--action-quiet-bg);
+    --action-border: var(--action-quiet-border);
+    --action-hover-bg: var(--action-quiet-hover-bg);
+    --action-hover-fg: var(--action-quiet-hover-fg);
+  }
+
+  .action-link[data-hovered="true"],
+  .action-link:hover {
+    color: var(--action-hover-fg);
+    border-color: color-mix(in srgb, var(--action-border) 40%, transparent);
+  }
+
+  .action-link-bg {
+    background-color: var(--action-hover-bg);
+  }
+}
+
+@layer utilities {
+  .max-w-editorial {
+    @apply max-w-[1280px];
+  }
+
+  .clip-path-circle-0 {
+    clip-path: circle(0px at var(--hover-x, 50%) var(--hover-y, 50%));
+  }
+  
+  .clip-path-circle-hover {
+    clip-path: circle(var(--hover-radius, 100%) at var(--hover-x, 50%) var(--hover-y, 50%));
+  }
+}
