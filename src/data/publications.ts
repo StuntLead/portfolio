@@ -3,7 +3,7 @@ import { Publication } from "@/types/portfolio";
 export const publications: Publication[] = [
   {
     title: "Hybrid Ensemble Model Approaches for Stock Price Forecasting using LSTM, Random Forest, ARIMA, and Linear Regression as Meta-Learner",
-    authors: ["Fernando Darren Rachman", "Deri Krisna", "Oqay Darmawan", "Irfan Naufal", "Vinsensius Willis", "Bayu Tenoyo"],
+    authors: ["Wisnutomo Adji Nugroho", "Fernando Darren Rachman", "Brainardo Kenneth Siahu", "Irene Anindaputri Iswanto", "Setiawan Joddy"],
     publisher: "Elsevier",
     venue: "Procedia Computer Science",
     year: 2025,
